@@ -1,8 +1,10 @@
 const express = require("express");
-const bodyParser = require("body-parser")
+const bodyParser = require("body-parser");
+const cors = require('cors');
 
 const app = express();
 app.use(bodyParser.json());
+app.use(cors());
 
 const database = {
 	users : [
@@ -27,11 +29,11 @@ app.post('/bank_register',(req,res) => {
    database.users.push({
    	id : 1,
    	bank_name:bank_name,
-	bank_address:bank_address,
-	bank_branch:bank_branch,
-	opening_hours:opening_hours,
-	phone_number:phone_number,
-	bank_code:bank_code,
+	  bank_address:bank_address,
+	  bank_branch:bank_branch,
+	  opening_hours:opening_hours,
+	  phone_number:phone_number,
+	  bank_code:bank_code,
    })
    res.json(database.users[database.users.length-1])
 })
@@ -45,7 +47,7 @@ app.get("/map_display",(req,res) => {
 
 })
 
-app.listen(3003, () => {
+app.listen(3001, () => {
 	console.log("app is running on port 3000");
 })
 
