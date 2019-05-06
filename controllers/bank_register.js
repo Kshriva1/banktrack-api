@@ -1,7 +1,9 @@
-const handleBank_register = (req,res) => {
+const handleBank_register = (req,res,db) => {
    const {bank_name,bank_address,bank_branch,opening_hours,phone_number,bank_code} = req.body;
+   if(!bank_name||!bank_address||!bank_branch||!opening_hours||!phone_number||!bank_code) {
+    return res.status(400).json("Wrong information entered");
+   }
    db.transaction(trx => {
-
     trx.insert({
       bank_name: bank_name,
       bank_branch: bank_branch
@@ -9,7 +11,7 @@ const handleBank_register = (req,res) => {
       .into('login')
       .returning('bank_branch')
       .then(loginBank_branch => {
-
+        console.log(loginBank_branch) 
         return trx('bankdetails')
         .returning('*')
         .insert({
